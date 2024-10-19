@@ -1,6 +1,7 @@
 // import { useRouter } from "next/router";
 import apolloClient from "../../lib/apolloClient";
 import { gql } from "@apollo/client";
+import Image from "next/image";
 
 const CHARACTER_QUERY = gql`
   query character($id: ID!) {
@@ -42,7 +43,13 @@ export default function Character({ character }) {
 
   return (
     <div className="p-4 h-full w-full flex flex-row flex-wrap gap-4 justify-center">
-      <img src={image} className="flex-1 h-full w-full" alt={name} />
+      <Image
+        src={image}
+        className="flex-1 h-full w-full"
+        alt={name}
+        height={700}
+        width={500}
+      />
       <div className="flex-1 flex flex-col font-black text-xl">
         <div>
           Name: <span className="italic font-normal">{name}</span>

@@ -1,4 +1,4 @@
-// import Image from "next/image";
+import Image from "next/image";
 import { useRouter } from "next/router";
 
 export const CharacterList = ({ characters }) => {
@@ -12,7 +12,13 @@ export const CharacterList = ({ characters }) => {
           onClick={() => push(`/characters/${id}`)}
           className="flex flex-col rounded-lg border-2 border-solid border-black overflow-hidden hover:border-cyan-500 hover:bg-slate-200 hover:opacity-90"
         >
-          <img src={image} className="flex-1" alt={name} />
+          <Image
+            src={image}
+            className="flex-1"
+            alt={name}
+            width={300}
+            height={300}
+          />
           <div className="mx-auto text-center my-1 font-bold">{name}</div>
         </button>
       ))}
