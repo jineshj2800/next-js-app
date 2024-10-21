@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { gql } from "@apollo/client";
 import apolloClient from "../lib/apolloClient";
 
-import { EmptyPlaceholder } from "../components/EmptyPlacholder";
+import { EmptyPlaceholder } from "../components/EmptyPlaceholder";
 
 const CHARACTERS_LOOKUP_QUERY = gql`
   query charactersByIds($ids: [ID!]!) {
