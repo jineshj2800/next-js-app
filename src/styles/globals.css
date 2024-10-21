@@ -18,6 +18,27 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+}
+
+.page-body {
+  height: calc(100% - 24px);
+}
+
+.page-link {
+  cursor: pointer;
+  border-radius: 4px;
+  height: 24px;
+  align-self: center;
+
+  &:hover {
+    background-color: #464545;
+  }
+}
+
+.follow-btn {
+  border-radius: 4px;
+  background-color: #6161b5;
 }
 
 @layer utilities {

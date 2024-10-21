@@ -1,5 +1,7 @@
 // import { useRouter } from "next/router";
 import apolloClient from "../../lib/apolloClient";
+import { useCallback } from "react";
+import { useRouter } from "next/router";
 import { gql } from "@apollo/client";
 import Image from "next/image";
 
@@ -37,9 +39,42 @@ const CHARACTER_QUERY = gql`
 //   }
 // `;
 
+const followCharacter = async ({ id }) => {
+  const response = await fetch("/api/follow", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ data: id }),
+  });
+
+  const result = await response.json();
+};
+
+const getFollowedCharacters = async () => {
+  const response = await fetch("/api/follow", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const result = await response.json();
+  console.log(result);
+};
+
 export default function Character({ character }) {
   const { image, name, status, location, gender, species, type, origin } =
     character;
+
+  const router = useRouter();
+  const id = router.query.id;
+
+  const onFollow = useCallback(() => {
+    followCharacter({ id }).then(() => {
+      getFollowedCharacters();
+    });
+  }, [id]);
 
   return (
     <div className="p-4 h-full w-full flex flex-row flex-wrap gap-4 justify-center">
@@ -73,6 +108,11 @@ export default function Character({ character }) {
         <div>
           Origin: <span className="italic font-normal">{origin.name}</span>
         </div>
+        <span>
+          <button onClick={onFollow} className="flex px-1 follow-btn">
+            Follow
+          </button>
+        </span>
       </div>
     </div>
   );
