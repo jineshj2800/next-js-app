@@ -1,7 +1,9 @@
 import { ApolloProvider } from "@apollo/client";
-import { Layout } from "../layout/Layout.tsx";
-import "@/styles/globals.css";
 import apolloClient from "../lib/apolloClient";
+
+import { Layout } from "../layout/Layout.tsx";
+
+import "@/styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   return (

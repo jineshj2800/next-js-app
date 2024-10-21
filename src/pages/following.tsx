@@ -1,6 +1,8 @@
-import { CharacterList } from "../components/characters/CharacterList";
+import dynamic from "next/dynamic";
 import { gql } from "@apollo/client";
 import apolloClient from "../lib/apolloClient";
+
+import { EmptyPlaceholder } from "../components/EmptyPlacholder";
 
 const CHARACTERS_LOOKUP_QUERY = gql`
   query charactersByIds($ids: [ID!]!) {
@@ -13,12 +15,21 @@ const CHARACTERS_LOOKUP_QUERY = gql`
   }
 `;
 
+const CharacterList = dynamic(
+  () => import("../components/characters/CharacterList"),
+  {
+    loading: () => <p>Loading...</p>,
+  }
+);
+
 const FollowingPage = ({ data }) => {
-  return <CharacterList characters={data} />;
+  return data?.length ? (
+    <CharacterList characters={data} />
+  ) : (
+    <EmptyPlaceholder />
+  );
 };
 
-// This gets called on every request
-//getStaticProps
 export async function getServerSideProps() {
   const client = apolloClient();
 
@@ -33,9 +44,6 @@ export async function getServerSideProps() {
   );
 
   const { storedData: followedCharacters } = await response.json();
-  console.log(followedCharacters);
-
-  //   await new Promise((resolve) => setTimeout(() => resolve(null), 3000));
 
   let result = [];
 
@@ -49,7 +57,6 @@ export async function getServerSideProps() {
     result = data.charactersByIds;
   }
 
-  // Pass data to the page via props
   return { props: { data: result } };
 }
 export default FollowingPage;

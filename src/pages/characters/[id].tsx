@@ -1,4 +1,3 @@
-// import { useRouter } from "next/router";
 import apolloClient from "../../lib/apolloClient";
 import { useCallback } from "react";
 import { useRouter } from "next/router";
@@ -26,19 +25,6 @@ const CHARACTER_QUERY = gql`
   }
 `;
 
-// const CHARACTERS_LIST_QUERY = gql`
-//   query characters {
-//     characters {
-//       results {
-//         id
-//         name
-//         image
-//         species
-//       }
-//     }
-//   }
-// `;
-
 const followCharacter = async ({ id }) => {
   const response = await fetch("/api/follow", {
     method: "POST",
@@ -48,19 +34,7 @@ const followCharacter = async ({ id }) => {
     body: JSON.stringify({ data: id }),
   });
 
-  const result = await response.json();
-};
-
-const getFollowedCharacters = async () => {
-  const response = await fetch("/api/follow", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const result = await response.json();
-  console.log(result);
+  await response.json();
 };
 
 export default function Character({ character }) {
@@ -71,9 +45,7 @@ export default function Character({ character }) {
   const id = router.query.id;
 
   const onFollow = useCallback(() => {
-    followCharacter({ id }).then(() => {
-      getFollowedCharacters();
-    });
+    followCharacter({ id });
   }, [id]);
 
   return (
@@ -116,10 +88,8 @@ export default function Character({ character }) {
       </div>
     </div>
   );
-  //   return JSON.stringify(data);
 }
 
-//getStaticProps
 export async function getServerSideProps({ params }) {
   const { id } = params;
   const client = apolloClient();
@@ -132,24 +102,5 @@ export async function getServerSideProps({ params }) {
     notifyOnNetworkStatusChange: true,
   });
 
-  //   await new Promise((resolve) => setTimeout(() => resolve(null), 3000));
-
-  // Pass data to the page via props
   return { props: { character: data.character } };
 }
-
-// export async function getStaticPaths() {
-//   //   const { id } = context.query;
-//   const client = apolloClient();
-
-//   const { data } = await client.query({
-//     query: CHARACTERS_LIST_QUERY,
-//     notifyOnNetworkStatusChange: true,
-//   });
-
-//   // Pass data to the page via props
-//   return {
-//     paths: data.characters.results.map(({ id }) => ({ params: { id } })),
-//     fallback: false,
-//   };
-// }

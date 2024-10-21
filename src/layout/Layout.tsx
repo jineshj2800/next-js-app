@@ -3,7 +3,7 @@ import { PageLink } from "./PageLink.tsx";
 export const Layout = ({ children }) => {
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      <div className="flex px-4 h-10 flex-none my-4 border">
+      <div className="flex h-10 flex-none my-4 nav-bar">
         <PageLink label="Home" href="/home" />
         <PageLink label="Following" href="/following" />
         <PageLink label="Contact Us" href="/contact-us" />

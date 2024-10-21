@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export const CharacterList = ({ characters }) => {
+const CharacterList = ({ characters }) => {
   const { push } = useRouter();
 
   return (
@@ -25,3 +25,5 @@ export const CharacterList = ({ characters }) => {
     </div>
   );
 };
+
+export default CharacterList;
